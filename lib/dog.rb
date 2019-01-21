@@ -32,13 +32,13 @@ class Dog
   end
 
   def self.new_from_db(row)
-    dog = self.new
-    dog.id = row[0]
-    dog.name = row[1]
-    dog.breed = row[2]
-    dog.save
-    dog
-  end 
+    new_dog = self.new
+    new_dog.id = row[0]
+    new_dog.name = row[1]
+    new_dog.breed = row[2]
+    new_dog.save
+    new_dog
+  end
 
   def self.find_by_id(id)
     DB[:conn].execute("SELECT * FROM dogs WHERE id = ?", id).map {|row| self.new_from_db(row)}.first

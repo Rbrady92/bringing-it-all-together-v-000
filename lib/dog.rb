@@ -37,7 +37,7 @@ class Dog
   end
 
   def self.find_by_id(id)
-    DB[:conn].execute("SELECT * FROM dogs WHERE id = 2").map {|row| self.new_from_db(row)}.first
+    DB[:conn].execute("SELECT * FROM dogs WHERE id = ?", id).map {|row| self.new_from_db(row)}.first
   end
 
   #def self.find_or_create_by

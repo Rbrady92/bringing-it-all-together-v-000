@@ -1,0 +1,18 @@
+class Dogs
+  attr_accessor :id, :name, :breed
+
+  def initialize(id: nil, name:, breed:)
+    @id = id
+    @name = name
+    @breed = breed
+  end
+
+  def attributes
+    DB[:conn].execute("CREATE TABLE IF NOT EXISTS dogs
+                        id INTEGER PRIMARY KEY,
+                        name TEXT,
+                        breed TEXT")
+  end
+
+
+end 

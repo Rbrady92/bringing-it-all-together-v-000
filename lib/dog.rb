@@ -27,9 +27,9 @@ class Dog
 
   def self.create(attributes)
     new_dog = Dog.new(attributes)
-    dog.save 
-    dog 
-  end     
+    dog.save
+    dog
+  end
 
 
 end

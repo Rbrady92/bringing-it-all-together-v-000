@@ -16,12 +16,17 @@ class Dog
   end
 
   def self.drop_table
-    DB[:conn].execute("DROP TABLE IF EXISTS dogs")
+    DB[:conn].execute("DROP TABLE dogs")
   end
 
   def save
-    DB[:conn].execute("INSERT INTO dogs (name, breed) VALUES (?, ?)", self.name, self.breed)
-    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM dogs")[0][0]
+    if self.id
+      self.update
+    else
+      DB[:conn].execute("INSERT INTO dogs (name, breed) VALUES (?, ?)", self.name, self.breed)
+      @id = DB[:conn].execute("SELECT last_insert_rowid() FROM dogs")[0][0]
+    end
+
     self
   end
 
@@ -32,7 +37,8 @@ class Dog
   end
 
   def self.new_from_db(row)
-    self.new(name: row[1], breed: row[2])
+    dog = self.new(name: row[1], breed: row[2])
+    dog.save
   end
 
   def self.find_by_id(id)
@@ -45,7 +51,7 @@ class Dog
     if dog
       new_dog = self.new_from_db(dog)
     else
-      new_dog = self.create({:name => name, :breed => breed})
+      new_dog = self.create([nil, name, breed])
     end
 
     new_dog

@@ -44,12 +44,12 @@ class Dog
     dog = DB[:conn].execute("SELECT * FROM dogs WHERE name = ? AND breed = ?", name, breed).first
 
     if dog
-      new_dog = self.new_from_db(dog)
+      #new_dog = self.new_from_db(dog)
+      dog
     else
       new_dog = self.create(name: name, breed: breed)
+      new_dog
     end
-
-    new_dog
   end
 
 

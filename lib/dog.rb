@@ -30,15 +30,15 @@ class Dog
     self
   end
 
-  def self.create(attributes)
-    dog = self.new(attributes)
+  def self.create(name:, breed:)
+    dog = self.new(name: name, breed: breed)
     dog.save
     dog
   end
 
   def self.new_from_db(row)
     dog = self.new(name: row[1], breed: row[2])
-    dog.save
+    #dog.save
   end
 
   def self.find_by_id(id)
@@ -66,7 +66,7 @@ class Dog
   end
 
   def update
-    DB[:conn].execute("UPDATE dogs SET name = ?, breed = ?, id = ?", self.name, self.breed, self.id)
+    DB[:conn].execute("UPDATE dogs SET name = ?, breed = ?, WHERE id = ?", self.name, self.breed, self.id)
   end
 
   def self.find_by_name(name)
